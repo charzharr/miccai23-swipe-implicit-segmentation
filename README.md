@@ -1,5 +1,3 @@
-# miccai23-swipe-implicit-segmentation
-
 SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embeddings
 ===========
 <details>
@@ -46,7 +44,7 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 - Code for [OSSNet](https://github.com/ChristophReich1996/OSS-Net)
 - Code for [IOSNet](https://github.com/osamakhaan/iosnet)
 - Code for [OccNet](https://github.com/autonomousvision/occupancy_networks)
-- If you found our work useful in your research, please consider citing our works(s) at:
+- If you found our work useful in your research, please consider citing our works(s):
 ```bash
 @inproceedings{zhang2023swipe,
   title        = {SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embeddings},
