@@ -33,7 +33,9 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 
   SwIPE (Segmentation with Implicit Patch Embeddings) is a medical image segmentation approach that utilizes implicit neural representations (INRs) to learn continuous representations rather than discrete ones which are commonly adopted by modern methods (e.g., CNNs, transformers, or combinations of both). 
 
-1. **Implicit Neural Representations (INRs)** are more 
+1. **Patch-based Implicit Neural Representations (INRs)**: SwIPE is the first approach to leverage patch-based INRs for medical image segmentation. This novel methodology allows for both accurate local boundary delineation and global shape coherence while moving away from discrete raster representations.
+2. **Efficieny and Robustness**: Through extensive evaluations, SwIPE outperforms state-of-the-art methods in both 2D polyp segmentation and 3D abdominal organ segmentation tasks. Notably, SwIPE achieves these results with over 10x fewer parameters, showcasing exceptional model efficiency. Additionally, SwIPE exhibits superior robustness to data shifts across image resolutions and datasets.
+3. **Augmented Contextual Understanding with Multi-stage Embedding Attention (MEA) and Stochastic Patch Overreach (SPO)**: The introduction of MEA for dynamic feature extraction and SPO for enhanced boundary improve contextual understanding during the encoding step and address boundary continuities during occupancy decoding, leading to more accurate and coherent segmentation results.
 </details>
 
 
