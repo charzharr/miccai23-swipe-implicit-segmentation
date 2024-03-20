@@ -5,6 +5,7 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
   <b>SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embeddings</b>, MICCAI 2023.
   <a href="https://conferences.miccai.org/2023/papers/635-Paper1380.html" target="blank">[MICCAI]</a>
   <a href="https://arxiv.org/abs/2307.12429" target="blank">[arXiv]</a>
+  <a href="https://arxiv.org/pdf/2307.12429.pdf" target="blank">[PDF]</a>
 	<br><em>
     <a href="https://charzharr.github.io/">Charley Y. Zhang</a>, 
     <a href="https://pgu-nd.github.io/">Pengfei Gu</a>, 
