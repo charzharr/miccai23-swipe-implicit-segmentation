@@ -58,7 +58,7 @@ cd miccai23-swipe-implicit-segmentation/src
 
 Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
 ```
-# First ensure you are in the src directory #
+# Ensure you're in the src directory
 pip install gdown
 gdown --fuzzy "https://drive.google.com/file/d/1fMgeJLH75b5FTqLUrKqt1XlDb1HyZn4f/view?usp=sharing"
 unzip swipe.zip
@@ -72,7 +72,7 @@ rm -r swipe swipe.zip
 
 To train SwIPE, simply navigate to the src directory and run:
 ```
-cd src
+# Ensure you're in the src directory
 python train.py --config swipe_sessile.yaml
 ```
 
