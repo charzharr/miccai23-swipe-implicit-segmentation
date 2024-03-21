@@ -39,7 +39,7 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 </details>
 
 
-[View the full poster (PDF)](miccai23_poster.png)
+![View the full poster (PDF)](miccai23_poster.png)
 
 
 ## Training and Testing
