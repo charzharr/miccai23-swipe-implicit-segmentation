@@ -84,10 +84,8 @@ Creating the 2D and 3D points for custom data can be found in the notebooks 'cre
 
 
 
-## Issues
-- Please open new threads or report issues to Charley's email: yzhang46@nd.edu.
-
 ## Acknowledgements, License & Usage 
+- Please open new threads or report issues to Charley's email: yzhang46@nd.edu
 - Code for [OSSNet](https://github.com/ChristophReich1996/OSS-Net)
 - Code for IOSNet was implemented by us (see [src/experiments/swipe/models/iosnet](https://github.com/charzharr/miccai23-swipe-implicit-segmentation/tree/master/src/experiments/swipe/models/iosnet) for both 2D and 3D models)
 - Code for [OccNet](https://github.com/autonomousvision/occupancy_networks)
