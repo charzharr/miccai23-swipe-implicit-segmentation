@@ -39,13 +39,56 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 </details>
 
 
+## Training and Testing
 
-## Issues
-- Please open new threads or report issues to Charley's email: yzhang46@nd.edu.
+### Environment Setup
+
+For our virtual env, we used Python 3.7. It's recommended to create a conda environment and then install the necessary packages within the environment's pip. 
+```
+conda create --name swipe python=3.9 
+conda activate swipe
+pip install click torch torchvision torchsummary einops albumentations monai dmt SimpleITK psutil matplotlib pandas jupyter
+```
+
+Next, clone this repository.
+```
+git clone https://github.com/charzharr/miccai23-swipe-implicit-segmentation.git
+```
+
+Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
+```
+pip install gdown
+gdown "https://drive.google.com/uc?id=1dWC0Un7XdeM3B-4zGzjKaQqxl6RlsofF"
+unzip swipe.zip
+
+mv swipe/artifacts src/experiments/swipe/
+mv swipe/data src/experiments/swipe/
+rm -r swipe swipe.zip
+```
+
+### Training
+
+To train SwIPE, simply navigate to the src directory and run:
+```
+cd src
+python train.py --config swipe_sessile.yaml
+```
+
+### Inference
+
+A notebook for inference and prediction visualizations can be found in [src/test.ipynb](https://github.com/charzharr/miccai23-swipe-implicit-segmentation/blob/master/src/test.ipynb). Ensure that the artifacts folder is correctly placed in src/experiments/swipe and run all the cells in order. This notebook will then infer on the test set of the 2D sessile data and visualize 2 items: 1) the original image, local patch prediction, ground truth, and prediction errors (red indicates FP pixels and blue shows FN pixels), and 2) the variance map of each predicted pixel (by default the variance is computed from the predictions of the target point and the 8 neighboring points). 
+
+
+### Custom Data Preparation
+
+Creating the 2D and 3D points for custom data can be found in the notebooks 'create_points2d' and 'create_points3d' in the data directory (download 'data' from the Google Drive [folder](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link) in swipe).
+
+
 
 ## Acknowledgements, License & Usage 
+- Please open new threads or report issues to Charley's email: yzhang46@nd.edu
 - Code for [OSSNet](https://github.com/ChristophReich1996/OSS-Net)
-- Code for [IOSNet](https://github.com/osamakhaan/iosnet)
+- Code for IOSNet was implemented by us (see [src/experiments/swipe/models/iosnet](https://github.com/charzharr/miccai23-swipe-implicit-segmentation/tree/master/src/experiments/swipe/models/iosnet) for both 2D and 3D models)
 - Code for [OccNet](https://github.com/autonomousvision/occupancy_networks)
 - If you found our work useful in your research, please consider citing our works(s):
 ```bash
