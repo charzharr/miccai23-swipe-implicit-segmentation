@@ -53,6 +53,7 @@ pip install click torch torchvision torchsummary einops albumentations monai dmt
 Next, clone this repository.
 ```
 git clone https://github.com/charzharr/miccai23-swipe-implicit-segmentation.git
+cd miccai23-swipe-implicit-segmentation/src
 ```
 
 Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
