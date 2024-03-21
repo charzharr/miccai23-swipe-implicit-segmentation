@@ -57,7 +57,13 @@ git clone git@github.com:charzharr/miccai23-swipe-implicit-segmentation.git
 
 Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
 ```
+pip install gdown
+gdown https://drive.google.com/uc?id=1dWC0Un7XdeM3B-4zGzjKaQqxl6RlsofF
+unzip swipe.zip
 
+mv swipe/artifacts src/experiments/swipe/
+mv swipe/data src/experiments/swipe/
+rm -r swipe
 ```
 
 ### Training
@@ -74,7 +80,7 @@ A notebook for inference and prediction visualizations can be found in [src/test
 
 ### Custom Data Preparation
 
-Creating the 2D and 3D points for custom data can be found in the notebooks 'create_points2d' and 'create_points3d' in the data directory (download from Google Drive).
+Creating the 2D and 3D points for custom data can be found in the notebooks 'create_points2d' and 'create_points3d' in the data directory (download 'data' from the Google Drive [folder](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link) in swipe).
 
 
 
