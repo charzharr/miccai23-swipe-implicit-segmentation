@@ -58,12 +58,13 @@ cd miccai23-swipe-implicit-segmentation/src
 
 Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
 ```
+# First ensure you are in the src directory #
 pip install gdown
 gdown --fuzzy "https://drive.google.com/file/d/1fMgeJLH75b5FTqLUrKqt1XlDb1HyZn4f/view?usp=sharing"
 unzip swipe.zip
 
-mv swipe/artifacts src/experiments/swipe/
-mv swipe/data src/experiments/swipe/
+mv swipe/artifacts experiments/swipe/
+mv swipe/data experiments/swipe/
 rm -r swipe swipe.zip
 ```
 
