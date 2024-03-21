@@ -45,31 +45,32 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 
 For our virtual env, we used Python 3.7. It's recommended to create a conda environment and then install the necessary packages within the environment's pip. 
 ```
-conda create --name swipe python=3.7
+conda create --name swipe python=3.9 
 conda activate swipe
-pip install click torch torchvision torchsummary einops albumentations monai dmt SimpleITK psutil
+pip install click torch torchvision torchsummary einops albumentations monai dmt SimpleITK psutil matplotlib pandas jupyter
 ```
 
 Next, clone this repository.
 ```
-git clone git@github.com:charzharr/miccai23-swipe-implicit-segmentation.git
+git clone https://github.com/charzharr/miccai23-swipe-implicit-segmentation.git
 ```
 
 Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
 ```
 pip install gdown
-gdown https://drive.google.com/uc?id=1dWC0Un7XdeM3B-4zGzjKaQqxl6RlsofF
+gdown "https://drive.google.com/uc?id=1dWC0Un7XdeM3B-4zGzjKaQqxl6RlsofF"
 unzip swipe.zip
 
 mv swipe/artifacts src/experiments/swipe/
 mv swipe/data src/experiments/swipe/
-rm -r swipe
+rm -r swipe swipe.zip
 ```
 
 ### Training
 
 To train SwIPE, simply navigate to the src directory and run:
 ```
+cd src
 python train.py --config swipe_sessile.yaml
 ```
 
