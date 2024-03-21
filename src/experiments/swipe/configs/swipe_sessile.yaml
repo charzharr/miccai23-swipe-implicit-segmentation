@@ -1,0 +1,245 @@
+# ---- ##  Experiment Setup, Logging Specifications, Environment  ## ---- #
+experiment:
+  description: Implicit shape models for medical image segmentation.
+  id: "(swipe-training)in384_b12p1k-ep200_dcbce-lr,0005emb,00001_r1" # ⭐ wandb run id
+  name: "swipe" # for experiment module identification
+  project: "miccai23_swipe"
+
+  num_runs: 1
+  amp: False
+  distributed: False
+  seed: 4200
+  hpsamp: ""
+
+  debug:                               # (Correct Alignment for Training)
+    mode: False                        # < Check
+    overfitbatch: False                # < Check
+    wandb: False                        # < Check  (disabled for code release)
+    save: False                         # < Check
+    break_train_iter: False            # < Check
+    break_test_iter: False             # < Check
+    evaluate_every_n_epochs: 2
+
+  checkpoint:
+    pth_keyword: "last"
+    use_ema: False
+    run_name: ""
+
+# ---- ##  Task Settings  ## ---- #
+
+task:
+  ndim: 2
+  paradigm: "implicit_global_local"
+  trainer: "trainer2d_ours_patch"
+
+  points_target: "occ" # sdf or occ
+  local_points_rep: "center" # center or norm
+  num_extensions: 8 # number of beyond-patch extensions
+
+  embedding_loss_wt: 0.00001
+  global_loss_wt: 0.5
+  smoothness_loss_wt: 0.0
+  ext_loss_wt: 0.1
+
+# ---- ##  Data Preprocessing, Loading, Transformation  ## ---- #
+
+data: # describing project-wide data specifications
+  name: "polyp_sessile"
+  polyp_sessile:
+    split: "118tr-39val-39ts_fs100.csv"
+    points_dn: "int1500_bnd500-std5_back4000"
+    preload: False
+
+    net_in_channels: 3
+    net_in_size: [384, 384] # [384, 384]
+    net_out_channels: 2
+
+    t_randresize_scale: [0.2, 0.9]
+    t_randresize_ratio: [0.9, 1.1]
+    t_hflip: 0.5
+    t_vflip: 0.5
+    t_rotate: 0.5
+    t_rotate_limit: 30
+    t_colorjitter: 0.5
+
+    classnames: ["background", "polyp"]
+    num_classes: 2 # including background
+
+# ---- ##  Model / Other Module Specifications  ## ---- #
+
+model:
+  name: "ours_cnn2d" # ours_cct2d, ours_cnn2d  | ndim extracted from name[-2]
+  init: ""
+
+  # Network Norm & Activation Layers
+  sync_bn: True         # (unused)
+  norm:
+    name: "batchnorm"
+    groups: 16          # only applies to GN
+  act:
+    name: "relu"
+
+  # CCT Transformer
+  ours_cct2d:
+    enc_name: "cct2d"
+    n_conv_layers: 5 # determines num of 2x downsamples
+    embedding_dim: 128 # orig: 384
+    num_layers: 4 # orig: 7
+    num_heads: 4 # orig: 6
+    mlp_ratio: 2
+    pos_embedding: "sine" # 'sine', 'learnable', 'none'
+    dropout_attn: 0.1
+    dropout_depth: 0.1
+
+    seq_pool: False
+    feature_flags:
+      [True, True, True, True, True, False, False]
+      # gp   gf    lp    lf    -2     -3    -4
+
+    dec_name: "deepsdf2d" # mlp2d  deepsdf2d
+    dec_dims: [256, 256, 256] #  [1024, 1024, 1024]
+    dec_residual_layers: [1]
+    dec_dropout: 0.1
+
+    glob_dec_name: "deepsdf2d" # mlp2d  deepsdf2d
+    glob_dec_dims: [256, 128]
+    glob_dec_residual_layers: [1]
+    glob_dec_dropout: 0.0
+
+  # TODO: Res2Net Encoder
+  ours_cnn2d:
+    embedding_dim: 256
+    hidden_dim: 64
+    local_fourier_coords_dim: 24
+    global_fourier_coords_dim: 0
+    learnable_fourier_coords: False
+    feature_flags:
+      [True, True, True, True, False, False, False]
+      # gp   gf    lp    lf    -2     -3    -4
+
+    enc_name: "resnet2d"
+    block_expansion: 2
+    stage_dims: [64, 80, 96, 128]  # [64, 128, 192, 256], [64, 80, 96, 128]
+    layers: 28                      # 14, 28, 50
+    base_width: 26                  # default: 26
+    dropout: 0.0
+    stochastic_depth: 0.0
+
+    shape_mapper_name: "v3"
+    sm_use_rfb: True
+    sm_use_rfb_lite: True
+    sm_downsample_mode: "avg_pool" # max_pool, avg_pool, conv
+    sm_semantic_accum: "weigh3" # conv, weigh, se, sa
+
+    dec_name: "deepsdf2d" # mlp2d  deepsdf2d
+    dec_dims: [256, 256, 256] #  [1024, 1024, 1024]
+    dec_residual_layers: [1]
+    dec_dropout: 0.1
+
+    glob_embedding_dim: 256
+    glob_head: "pool" # pool, conv
+    glob_dec_name: "deepsdf2d" # mlp2d  deepsdf2d
+    glob_dec_dims: [256, 128]
+    glob_dec_residual_layers: [1]
+    glob_dec_dropout: 0.0
+
+# ---- ##  Training: iterations, criterion, optimization, etc.  ## ---- #
+
+train:
+  deep_sup: False
+
+  epochs: 200
+  start_epoch: 0
+  batch_size: 12 
+  batch_num_points: 1000 
+  dataset_sample_multiplier: 100
+  num_workers: 8 
+
+  criterion:
+    name: "dice-bce"
+    dice:
+      nonlin: "sigmoid" # sigmoid, softmax
+      do_bg: True
+      batch_dice: False
+      smooth: 1.
+    dice-bce:
+      dc_weight: 0.5
+      dc_kw:
+        do_bg: True
+        batch_dice: True
+        smooth: 1.
+      ce_weight: 0.5
+    dice-ce:
+      dc_weight: 0.5
+      dc_kw:
+        do_bg: True
+        batch_dice: True
+        smooth: 1.
+      ce_weight: 0.5
+      ce_kw:
+        weight: null # 'bcv' # 'bcv_cbrt'
+
+  optimizer:
+    name: "adamw"
+    lr: 0.0005 # ⭐ usually 0.01 for FS50 & above
+    wt_decay: 0.0000 # ⭐
+
+    sgd:
+      momentum: 0.9
+    adamw:
+      betas: [0.9, 0.999]
+
+  scheduler:
+    name: "cosine"
+    rampup_rates: []
+    min_lr: 0.00001
+
+    poly:
+      power: 0.9
+    step:
+      factor: 0.2
+      steps: [0.3, 0.6, 0.9]
+    exponential:
+      exp_factor: 0.95
+
+test:
+  batch_size: 1
+  overlap: 0.75
+  logits_thresh: 0
+  pred_agg_activation: none # for CBA, ensemble logits (none) or softmax
+
+serialize:
+  save_model: True # top save model flag (overwrites rest)
+  save_recent_model: True # save model every epoch or only on best val?
+  save_model_after: 0.25 # save model after this percentage of total epochs
+
+  force_test_after: 0.25 # test after this perc of epochs has completed
+  save_test_predictions: True
+  save_metric: ["val_ep_dice_summary", True] # metric-name, bigger better?
+  summarize:
+    triggers:
+      - "val_ep_dice_summary"
+      - "test_ep_dice_summary"
+    saves:
+      - "val_ep_dice_summary"
+      - "test_ep_dice_summary"
+
+  train_metrics:
+    - "loss"
+    - "recall_agg"
+    - "precision_agg"
+    - "dice_summary"
+    - "dice_summary_agg"
+    - "jaccard_summary"
+    - "jaccard_summary_agg"
+
+  test_metrics:
+    - "recall_agg"
+    - "precision_agg"
+    - "dice_summary"
+    - "dice_summary_agg"
+    - "jaccard_summary"
+    - "jaccard_summary_agg"
+    - "tps"
+    - "fps"
+    - "fns"
