@@ -43,7 +43,7 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 
 ### Environment Setup
 
-For our virtual env, we used Python 3.7. It's recommended to create a conda environment and then install the necessary packages within the environment's pip. 
+For our virtual env, we used Python 3.9. It's recommended to create a conda environment and then install the necessary packages within the environment's pip. 
 ```
 conda create --name swipe python=3.9 
 conda activate swipe
@@ -58,7 +58,7 @@ git clone https://github.com/charzharr/miccai23-swipe-implicit-segmentation.git
 Finally, access the model weights and point data used for training & inference at this Google Drive [location](https://drive.google.com/drive/folders/17mZLlE_lOxGEl9dNqP0xj5TrD08FawZ2?usp=drive_link). The swipe.zip file is just the compressed swipe folder. After uncompressing, move the 'artifacts' and 'data' folder into src/experiments/swipe (i.e. to src/experiments/swipe/artifacts and src/experiments/swipe/data). You may also do this via commandline:
 ```
 pip install gdown
-gdown "https://drive.google.com/uc?id=1dWC0Un7XdeM3B-4zGzjKaQqxl6RlsofF"
+gdown "https://drive.google.com/file/d/1fMgeJLH75b5FTqLUrKqt1XlDb1HyZn4f/view?usp=drive_link"
 unzip swipe.zip
 
 mv swipe/artifacts src/experiments/swipe/
