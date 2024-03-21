@@ -60,7 +60,7 @@ Finally, access the model weights and point data used for training & inference a
 ```
 # Ensure you're in the src directory
 pip install gdown
-gdown --fuzzy "https://drive.google.com/file/d/1fMgeJLH75b5FTqLUrKqt1XlDb1HyZn4f/view?usp=sharing"
+gdown --fuzzy "https://drive.google.com/file/d/12bii96Z2J8YlgQVnRiuLwcKwSUE76AJS/view?usp=drive_link"
 unzip swipe.zip
 
 mv swipe/artifacts experiments/swipe/
