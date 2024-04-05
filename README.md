@@ -15,8 +15,8 @@ SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embed
 
 ```bash
 @inproceedings{zhang2023swipe,
-  title        = {SwIPE: Efficient and Robust Medical Image Segmentation with Implicit Patch Embeddings},
-  author       = {Zhang, Charley Y. and Gu, Pengfei and Sapkota, Nishchal and Chen, Danny Z},
+  title        = {{SwIPE}: Efficient and Robust Medical Image Segmentation with Implicit Patch Embeddings},
+  author       = {Zhang, Charley Y. and Gu, Pengfei and Sapkota, Nishchal and Chen, Danny Z.},
   booktitle    = {International Conference on Medical Image Computing and Computer-Assisted Intervention (MICCAI)},
   pages        = {315--326},
   year         = {2023},
